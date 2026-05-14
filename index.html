@@ -1,196 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Princess ❤️</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Princess ❤️</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    body{
-      font-family:'Poppins',sans-serif;
-      background:linear-gradient(135deg,#0f172a,#1e293b,#111827);
-      overflow-x:hidden;
-      color:white;
-    }
+body{
+  font-family:'Poppins',sans-serif;
+  background:#000;
+  color:white;
+  overflow-x:hidden;
+}
 
-    .hero{
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      position:relative;
-      padding:20px;
-    }
+.hero{
+  position:relative;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  overflow:hidden;
+}
 
-    .glow{
-      position:absolute;
-      width:500px;
-      height:500px;
-      background:#ff4d8d;
-      filter:blur(180px);
-      opacity:0.25;
-      border-radius:50%;
-      animation:float 6s ease-in-out infinite;
-    }
+.bg{
+  position:absolute;
+  inset:0;
+  background:url('background.jpg') center/cover no-repeat;
+  filter:grayscale(100%) brightness(35%);
+  transform:scale(1.05);
+}
 
-    @keyframes float{
-      0%,100%{transform:translateY(0px);}
-      50%{transform:translateY(-30px);}
-    }
+.overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.3),rgba(0,0,0,0.8));
+}
 
-    .content{
-      position:relative;
-      z-index:2;
-      max-width:800px;
-    }
+.content{
+  position:relative;
+  z-index:2;
+  padding:20px;
+}
 
-    h1{
-      font-size:4rem;
-      font-family:'Dancing Script',cursive;
-      color:#ffb6d0;
-      margin-bottom:10px;
-      animation:fadeIn 2s ease;
-    }
+.small{
+  letter-spacing:5px;
+  font-size:1rem;
+  color:#d1d5db;
+  margin-bottom:10px;
+}
 
-    h2{
-      font-size:2rem;
-      margin-bottom:25px;
-      animation:fadeIn 2.5s ease;
-    }
+h1{
+  font-size:5rem;
+  font-family:'Dancing Script',cursive;
+  color:#fff;
+  margin-bottom:10px;
+}
 
-    p{
-      font-size:1.1rem;
-      line-height:1.9;
-      color:#e5e7eb;
-      margin-bottom:30px;
-      animation:fadeIn 3s ease;
-    }
+.counter{
+  font-size:7rem;
+  font-weight:700;
+  color:#ffffff;
+  opacity:0.9;
+  margin:20px 0;
+}
 
-    .btn{
-      display:inline-block;
-      padding:14px 28px;
-      background:#ff4d8d;
-      color:white;
-      text-decoration:none;
-      border-radius:50px;
-      font-weight:600;
-      transition:0.3s;
-      box-shadow:0 0 25px rgba(255,77,141,0.5);
-      animation:fadeIn 3.5s ease;
-    }
+.subtitle{
+  font-size:1.5rem;
+  color:#f3f4f6;
+}
 
-    .btn:hover{
-      transform:scale(1.05);
-      background:#ff6ca4;
-    }
+.gallery{
+  padding:100px 20px;
+  background:#0f0f0f;
+}
 
-    .message{
-      padding:80px 20px;
-      text-align:center;
-      max-width:900px;
-      margin:auto;
-    }
+.gallery-title{
+  text-align:center;
+  font-size:3rem;
+  margin-bottom:60px;
+  font-family:'Dancing Script',cursive;
+}
 
-    .message h3{
-      font-size:2.5rem;
-      margin-bottom:20px;
-      color:#ffb6d0;
-    }
+.frames{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:40px;
+  max-width:1200px;
+  margin:auto;
+}
 
-    .message p{
-      font-size:1.1rem;
-    }
+.frame{
+  background:#111;
+  padding:12px;
+  border:8px solid #fff;
+  box-shadow:0 15px 40px rgba(0,0,0,0.6);
+  transform:rotate(-2deg);
+  transition:0.4s;
+}
 
-    .footer{
-      text-align:center;
-      padding:30px;
-      color:#9ca3af;
-      font-size:0.9rem;
-    }
+.frame:nth-child(even){
+  transform:rotate(2deg);
+}
 
-    .heart{
-      position:fixed;
-      color:#ff4d8d;
-      animation:fall linear forwards;
-      top:-10px;
-      z-index:1;
-    }
+.frame:hover{
+  transform:scale(1.04);
+}
 
-    @keyframes fall{
-      to{
-        transform:translateY(110vh);
-      }
-    }
+.frame img{
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  display:block;
+}
 
-    @keyframes fadeIn{
-      from{
-        opacity:0;
-        transform:translateY(20px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
+.message{
+  padding:100px 20px;
+  text-align:center;
+  max-width:900px;
+  margin:auto;
+}
 
-    audio{
-      display:none;
-    }
+.message h2{
+  font-size:3rem;
+  margin-bottom:20px;
+  font-family:'Dancing Script',cursive;
+}
 
-    @media(max-width:768px){
-      h1{
-        font-size:3rem;
-      }
+.message p{
+  line-height:2;
+  color:#d1d5db;
+  font-size:1.1rem;
+}
 
-      h2{
-        font-size:1.5rem;
-      }
+.footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+}
 
-      p{
-        font-size:1rem;
-      }
-    }
-  </style>
+@media(max-width:768px){
+  h1{
+    font-size:3rem;
+  }
+
+  .counter{
+    font-size:4rem;
+  }
+
+  .subtitle{
+    font-size:1.1rem;
+  }
+}
+</style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="glow"></div>
+<section class="hero">
+  <div class="bg"></div>
+  <div class="overlay"></div>
 
   <div class="content">
+    <div class="small">16th OF MAY</div>
+
     <h1>Happy Birthday</h1>
-    <h2>My Little Princess ❤️</h2>
 
-    <p>
-      Today is all about you.
-      Your smile, your happiness, and the beautiful soul that makes my life brighter every single day.
-      I hope this year brings you endless happiness, unforgettable memories, and everything your heart wishes for.
-    </p>
+    <div class="counter" id="counter">2007</div>
 
-    <a href="#message" class="btn">Open My Message</a>
+    <div class="subtitle">My Little Princess ❤️</div>
   </div>
-</div>
+</section>
 
-<section class="message" id="message">
-  <h3>For You ❤️</h3>
+<section class="gallery">
+  <div class="gallery-title">Our Memories ✨</div>
+
+  <div class="frames">
+
+    <div class="frame">
+      <img src="photo1.jpg" alt="photo">
+    </div>
+
+    <div class="frame">
+      <img src="photo2.jpg" alt="photo">
+    </div>
+
+    <div class="frame">
+      <img src="photo3.jpg" alt="photo">
+    </div>
+
+    <div class="frame">
+      <img src="photo4.jpg" alt="photo">
+    </div>
+
+  </div>
+</section>
+
+<section class="message">
+  <h2>For You ❤️</h2>
 
   <p>
-    Thank you for being the most special person in my life.
-    No matter where life takes us, I will always cherish every moment, every laugh, and every memory with you.
-  </p>
-
-  <p>
-    I hope your birthday is as beautiful as your heart.
-    Keep smiling, princess. ✨
+    Every memory with you is special to me.
+    Thank you for bringing happiness, comfort, and love into my life.
+    I hope your birthday is filled with smiles, laughter, and unforgettable moments.
   </p>
 </section>
 
@@ -199,23 +218,24 @@
 </div>
 
 <script>
-  function createHeart(){
-    const heart=document.createElement('div');
-    heart.classList.add('heart');
-    heart.innerHTML='❤';
+const counter=document.getElementById('counter');
 
-    heart.style.left=Math.random()*100+'vw';
-    heart.style.fontSize=Math.random()*20+10+'px';
-    heart.style.animationDuration=Math.random()*3+3+'s';
+let year=2007;
 
-    document.body.appendChild(heart);
+const interval=setInterval(()=>{
+  counter.innerHTML=year;
+  year++;
+
+  if(year>2026){
+    clearInterval(interval);
 
     setTimeout(()=>{
-      heart.remove();
-    },6000);
+      counter.innerHTML='19';
+      counter.style.transform='scale(1.2)';
+      counter.style.transition='0.5s';
+    },500);
   }
-
-  setInterval(createHeart,300);
+},120);
 </script>
 
 </body>
