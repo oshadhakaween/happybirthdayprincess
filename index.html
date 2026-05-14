@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Princess ❤️</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:'Poppins',sans-serif;
+      background:linear-gradient(135deg,#0f172a,#1e293b,#111827);
+      overflow-x:hidden;
+      color:white;
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      position:relative;
+      padding:20px;
+    }
+
+    .glow{
+      position:absolute;
+      width:500px;
+      height:500px;
+      background:#ff4d8d;
+      filter:blur(180px);
+      opacity:0.25;
+      border-radius:50%;
+      animation:float 6s ease-in-out infinite;
+    }
+
+    @keyframes float{
+      0%,100%{transform:translateY(0px);}
+      50%{transform:translateY(-30px);}
+    }
+
+    .content{
+      position:relative;
+      z-index:2;
+      max-width:800px;
+    }
+
+    h1{
+      font-size:4rem;
+      font-family:'Dancing Script',cursive;
+      color:#ffb6d0;
+      margin-bottom:10px;
+      animation:fadeIn 2s ease;
+    }
+
+    h2{
+      font-size:2rem;
+      margin-bottom:25px;
+      animation:fadeIn 2.5s ease;
+    }
+
+    p{
+      font-size:1.1rem;
+      line-height:1.9;
+      color:#e5e7eb;
+      margin-bottom:30px;
+      animation:fadeIn 3s ease;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:14px 28px;
+      background:#ff4d8d;
+      color:white;
+      text-decoration:none;
+      border-radius:50px;
+      font-weight:600;
+      transition:0.3s;
+      box-shadow:0 0 25px rgba(255,77,141,0.5);
+      animation:fadeIn 3.5s ease;
+    }
+
+    .btn:hover{
+      transform:scale(1.05);
+      background:#ff6ca4;
+    }
+
+    .message{
+      padding:80px 20px;
+      text-align:center;
+      max-width:900px;
+      margin:auto;
+    }
+
+    .message h3{
+      font-size:2.5rem;
+      margin-bottom:20px;
+      color:#ffb6d0;
+    }
+
+    .message p{
+      font-size:1.1rem;
+    }
+
+    .footer{
+      text-align:center;
+      padding:30px;
+      color:#9ca3af;
+      font-size:0.9rem;
+    }
+
+    .heart{
+      position:fixed;
+      color:#ff4d8d;
+      animation:fall linear forwards;
+      top:-10px;
+      z-index:1;
+    }
+
+    @keyframes fall{
+      to{
+        transform:translateY(110vh);
+      }
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    audio{
+      display:none;
+    }
+
+    @media(max-width:768px){
+      h1{
+        font-size:3rem;
+      }
+
+      h2{
+        font-size:1.5rem;
+      }
+
+      p{
+        font-size:1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="glow"></div>
+
+  <div class="content">
+    <h1>Happy Birthday</h1>
+    <h2>My Little Princess ❤️</h2>
+
+    <p>
+      Today is all about you.
+      Your smile, your happiness, and the beautiful soul that makes my life brighter every single day.
+      I hope this year brings you endless happiness, unforgettable memories, and everything your heart wishes for.
+    </p>
+
+    <a href="#message" class="btn">Open My Message</a>
+  </div>
+</div>
+
+<section class="message" id="message">
+  <h3>For You ❤️</h3>
+
+  <p>
+    Thank you for being the most special person in my life.
+    No matter where life takes us, I will always cherish every moment, every laugh, and every memory with you.
+  </p>
+
+  <p>
+    I hope your birthday is as beautiful as your heart.
+    Keep smiling, princess. ✨
+  </p>
+</section>
+
+<div class="footer">
+  Made with love by Oshadha ❤️
+</div>
+
+<script>
+  function createHeart(){
+    const heart=document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerHTML='❤';
+
+    heart.style.left=Math.random()*100+'vw';
+    heart.style.fontSize=Math.random()*20+10+'px';
+    heart.style.animationDuration=Math.random()*3+3+'s';
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+      heart.remove();
+    },6000);
+  }
+
+  setInterval(createHeart,300);
+</script>
+
+</body>
+</html>
+
