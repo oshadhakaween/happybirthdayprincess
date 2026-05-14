@@ -66,10 +66,10 @@ h1{
 }
 
 .counter{
-  font-size:7rem;
+  font-size: 2rem;
   font-weight:700;
   color:#ffffff;
-  opacity:0.9;
+  opacity:0.4;
   margin:20px 0;
 }
 
@@ -153,13 +153,123 @@ h1{
   }
 
   .counter{
-    font-size:4rem;
+    font-size:2rem;
   }
 
   .subtitle{
     font-size:1.1rem;
   }
 }
+
+  .heart{
+  position:fixed;
+  color:#ff4d8d;
+  opacity: 0.5;
+  top:-10px;
+  z-index:1;
+  animation:fall linear forwards;
+  }
+
+  @keyframes fall{
+    to{
+      transform:translateY(110vh);
+   }
+  }
+
+  .subtitle{
+  font-size:1.5rem;
+  color:#f3f4f6;
+  animation:glow 2s ease-in-out infinite;
+}
+
+@keyframes glow{
+  0%,100%{
+    text-shadow:0 0 10px rgba(255,255,255,0.2);
+  }
+
+  50%{
+    text-shadow:
+    0 0 20px rgba(255,255,255,0.8),
+    0 0 40px rgba(255,192,203,0.6);
+  }
+}
+
+.frame{
+  animation:floatFrame 4s ease-in-out infinite;
+}
+
+@keyframes floatFrame{
+  0%,100%{
+    transform:translateY(0px) rotate(-2deg);
+  }
+
+  50%{
+    transform:translateY(-10px) rotate(1deg);
+  }
+}
+
+.typing{
+  font-size: .7rem;
+  opacity: .6;
+  padding-top: 5rem;
+}
+
+.bg{
+  animation:zoomBg 12s ease-in-out infinite alternate;
+}
+
+@keyframes zoomBg{
+  from{
+    transform:scale(1);
+  }
+
+  to{
+    transform:scale(1.08);
+  }
+}
+
+.love-popup{
+
+  position:fixed;
+
+  right:25px;
+  bottom:25px;
+
+  padding:14px 22px;
+
+  border-radius:20px;
+
+  background:rgba(255,255,255,0.1);
+
+  backdrop-filter:blur(12px);
+
+  color:white;
+
+  font-size:0.8rem;
+
+  letter-spacing:1px;
+
+  z-index:999;
+
+  animation:floating 3s ease-in-out infinite;
+
+  transition:all 0.5s ease;
+
+  box-shadow:
+  0 8px 30px rgba(0,0,0,0.25);
+}
+
+@keyframes floating{
+
+  0%,100%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-10px);
+  }
+}
+
 </style>
 </head>
 <body>
@@ -171,13 +281,19 @@ h1{
   <div class="content">
     <div class="small">16th OF MAY</div>
 
-    <div class="counter" id="counter">2007</div>
-    
+    <div class="counter" id="counter">2007 - 2007</div>
+    <div class="counter2" id="counter2"></div>
     <h1>Happy Birthday</h1>
 
     <div class="subtitle">My Little Princess ❤️</div>
+    <p id="typing" class="typing"></p>
+    
   </div>
 </section>
+
+<div class="love-popup" id="lovePopup">
+  Scroll Down ↓
+</div>
 
 <section class="gallery">
   <div class="gallery-title"> Random Clicks ✨</div>
@@ -223,19 +339,97 @@ const counter=document.getElementById('counter');
 let year=2007;
 
 const interval=setInterval(()=>{
-  counter.innerHTML=year;
+  counter.innerHTML="2007 - " + year;
   year++;
 
-  if(year>2026){
+  if(year>2025){
     clearInterval(interval);
 
     setTimeout(()=>{
-      counter.innerHTML='19th';
-      counter.style.transform='scale(1.2)';
-      counter.style.transition='1s';
+      counter.innerHTML="2007 - " + year;
+      counter.style.transition='5.5s';
+      counter.style.transform='scale(1.02)';
     },500);
   }
-},120);
+},300);
+
+function createHeart(){
+  const heart=document.createElement('div');
+
+  heart.classList.add('heart');
+  heart.innerHTML='❤';
+
+  heart.style.left=Math.random()*100+'vw';
+
+  heart.style.fontSize=Math.random()*20+10+'px';
+
+  heart.style.animationDuration=
+  Math.random()*3+3+'s';
+
+  document.body.appendChild(heart);
+
+  setTimeout(()=>{
+    heart.remove();
+  },6000);
+}
+
+setInterval(createHeart,300);
+
+const text =
+'You are the best thing that ever happened to me ❤️';
+
+let i = 0;
+
+function type(){
+
+  if(i < text.length){
+
+    document.getElementById('typing')
+    .innerHTML += text.charAt(i);
+
+    i++;
+
+    setTimeout(type,80);
+  }
+}
+type();
+
+const lovePopup =
+document.getElementById('lovePopup');
+
+window.addEventListener('scroll',()=>{
+
+  if(window.scrollY > 150){
+
+    lovePopup.innerHTML =
+    'I Love You Babe ❤️';
+
+    lovePopup.style.background =
+    'rgba(255,77,141,0.2)';
+
+    lovePopup.style.boxShadow =
+    '0 0 30px rgba(255,77,141,0.35)';
+
+    lovePopup.style.transform =
+    'scale(1.05)';
+
+    lovePopup.style.transition = '2s';
+  }
+
+  else{
+
+    lovePopup.innerHTML =
+    'Scroll Down ↓';
+
+    lovePopup.style.background =
+    'rgba(255,255,255,0.1)';
+
+    lovePopup.style.boxShadow =
+    '0 8px 30px rgba(0,0,0,0.25)';
+
+    lovePopup.style.transition = '2s';
+  }
+});
 </script>
 
 </body>
