@@ -451,6 +451,142 @@ to bottom,
   border-radius:20px;
 }
 
+/* Hidden final button */
+#secretBtn {
+  display: none;
+  margin-top: 20px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(45deg, #ff4d6d, #ffb6c1);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+
+  /* glow effect */
+  box-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;
+  animation: glowPulse 1.5s infinite alternate;
+}
+
+/* glowing animation */
+@keyframes glowPulse {
+  from {
+    box-shadow: 0 0 8px #ff4d6d, 0 0 15px #ff4d6d;
+    transform: scale(1);
+  }
+  to {
+    box-shadow: 0 0 20px #ff4d6d, 0 0 35px #ff4d6d;
+    transform: scale(1.05);
+  }
+}
+
+/* final message*/
+#finalMessage {
+  display: none;
+  margin-top: 20px;
+  font-size: 22px;
+  color: #ffd6ff;
+
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+/* when shown */
+#finalMessage.show {
+  display: block;
+  animation: popIn 0.8s ease forwards;
+}
+
+/* pop animation */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(40px);
+  }
+  60% {
+    transform: scale(1.1) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Background overlay */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(5px);
+  display: none;
+  z-index: 999;
+}
+
+/* Popup box */
+#finalPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  background: linear-gradient(135deg, #1a1a2e, #2a1f3d);
+  padding: 30px;
+  border-radius: 18px;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  color: white;
+
+  display: none;
+  z-index: 1000;
+
+  box-shadow: 0 0 25px rgba(255, 105, 180, 0.4);
+}
+
+/* popup animation */
+#finalPopup.show {
+  display: block;
+  animation: popUp 0.5s ease forwards;
+}
+
+@keyframes popUp {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* close button */
+#closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#closeBtn:hover {
+  color: #ff4d6d;
+}
+
+/* message style */
+.popupContent {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
 </style>
 </head>
 <body>
@@ -536,7 +672,28 @@ to bottom,
     I hope this birthday becomes another special chapter in your life filled with smiles, laughter, and unforgettable memories. 
     Keep shining, beautiful. ❤️
   </p>
+
+  <button id="secretBtn" onclick="revealFinal()">
+  One More Thing...
+  </button>
+
+  <!-- <div id="finalMessage">
+    💌 I miss you more than words can say...
+  </div> -->
+
 </section>
+
+<!-- Overlay -->
+<div id="overlay"></div>
+
+<!-- Popup -->
+<div id="finalPopup">
+  <button id="closeBtn" onclick="closePopup()">✖</button>
+
+  <div class="popupContent">
+    💌 I miss you more than words can say...
+  </div>
+</div>
 
 <div class="footer">
   Made with love by Oshadha ❤️
@@ -687,6 +844,25 @@ window.addEventListener('scroll',()=>{
     },2800);
   }
 });
+
+// Show secret button after delay (last section effect)
+setTimeout(() => {
+  const btn = document.getElementById("secretBtn");
+  if (btn) btn.style.display = "inline-block";
+}, 4000);
+
+
+// Final hidden message
+function revealFinal() {
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("finalPopup").classList.add("show");
+}
+
+function closePopup() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("finalPopup").classList.remove("show");
+}
+</script>
 </script>
 
 </body>
