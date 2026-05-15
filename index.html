@@ -270,6 +270,187 @@ h1{
   }
 }
 
+.birthday-scene{
+
+  min-height:100vh;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  align-items:center;
+
+  text-align:center;
+
+  position:relative;
+
+  overflow:hidden;
+
+  padding:100px 20px;
+  background:#0f0f0f;
+  background:linear-gradient(
+to bottom,
+#111827,
+#1f2937,
+#0f172a
+);
+}
+
+.scene-text{
+
+  font-size:2rem;
+
+  margin-bottom:40px;
+
+  opacity:0;
+
+  transform:translateY(30px);
+
+  transition:1s ease;
+}
+
+.cake-container{
+
+  position:relative;
+
+  margin-bottom:40px;
+}
+
+.cake{
+
+  width:180px;
+
+  height:100px;
+
+  background:#ff9ec4;
+
+  border-radius:20px;
+
+  position:relative;
+
+  box-shadow:
+  0 10px 30px rgba(255,105,180,0.3);
+}
+
+.cake::before{
+
+  content:'';
+
+  position:absolute;
+
+  top:20px;
+  left:0;
+
+  width:100%;
+  height:15px;
+
+  background:white;
+}
+
+.candle{
+
+  width:14px;
+
+  height:60px;
+
+  background:white;
+
+  position:absolute;
+
+  top:-55px;
+  left:50%;
+
+  transform:translateX(-50%);
+}
+
+.flame{
+
+  width:18px;
+
+  height:18px;
+
+  background:#ffd166;
+
+  border-radius:50%;
+
+  position:absolute;
+
+  top:-16px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  animation:flicker 1s infinite;
+}
+
+@keyframes flicker{
+
+  0%,100%{
+    transform:
+    translateX(-50%)
+    scale(1);
+  }
+
+  50%{
+    transform:
+    translateX(-50%)
+    scale(1.2);
+  }
+}
+
+.birthday-message{
+
+  margin-top:30px;
+
+  font-size:2.5rem;
+
+  opacity:0;
+
+  transform:translateY(20px);
+
+  transition:1s ease;
+}
+
+.cake-gif img{
+
+  width:260px;
+
+  max-width:80vw;
+
+  border-radius:20px;
+
+  box-shadow:
+  0 20px 60px rgba(0,0,0,0.4);
+
+  opacity:0;
+
+  transform:scale(0.8);
+
+  transition:1s ease;
+}
+
+.bears{
+
+  opacity:0;
+
+  transform:translateY(30px);
+
+  transition:1s ease;
+
+  margin-top:30px;
+}
+
+.bears img{
+
+  width:240px;
+
+  max-width:75vw;
+
+  border-radius:20px;
+}
+
 </style>
 </head>
 <body>
@@ -317,6 +498,34 @@ h1{
     </div>
 
   </div>
+</section>
+
+<section class="birthday-scene">
+
+  <div class="scene-text" id="sceneText">
+    Make A Wish ✨
+  </div>
+
+  <div class="cake-gif">
+
+  <img
+    src="cake.gif"
+    alt="Birthday Cake">
+
+  </div>
+
+  <div class="birthday-message" id="birthdayMessage">
+    Happy Birthday Princess ❤️
+  </div>
+
+  <div class="bears" id="bears">
+
+    <img
+    src="bears.gif"
+    alt="Cute Bears">
+
+  </div>
+
 </section>
 
 <section class="message">
@@ -428,6 +637,54 @@ window.addEventListener('scroll',()=>{
     '0 8px 30px rgba(0,0,0,0.25)';
 
     lovePopup.style.transition = '2s';
+  }
+});
+
+const scene =
+document.querySelector('.birthday-scene');
+
+const sceneText =
+document.getElementById('sceneText');
+
+const birthdayMessage =
+document.getElementById('birthdayMessage');
+
+const cake =
+document.querySelector('.cake-gif img');
+
+const bears =
+document.getElementById('bears');
+
+window.addEventListener('scroll',()=>{
+
+  const trigger =
+  scene.getBoundingClientRect().top;
+
+  if(trigger < window.innerHeight - 150){
+
+    sceneText.style.opacity='1';
+    sceneText.style.transform='translateY(0)';
+
+    setTimeout(()=>{
+
+      cake.style.opacity='1';
+      cake.style.transform='scale(1)';
+
+    },800);
+
+    setTimeout(()=>{
+
+      birthdayMessage.style.opacity='1';
+      birthdayMessage.style.transform='translateY(0)';
+
+    },1800);
+
+    setTimeout(()=>{
+
+      bears.style.opacity='1';
+      bears.style.transform='translateY(0)';
+
+    },2800);
   }
 });
 </script>
