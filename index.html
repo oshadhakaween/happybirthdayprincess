@@ -29,6 +29,23 @@ body{
   align-items:center;
   text-align:center;
   overflow:hidden;
+
+  .hero::before{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,77,109,0.25), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(255,182,193,0.18), transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08), transparent 60%);
+  z-index:1;
+  animation:slowGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes slowGlow{
+  from{ transform:scale(1); }
+  to{ transform:scale(1.1); }
+}
 }
 
 .bg{
@@ -63,6 +80,30 @@ h1{
   font-family:'Dancing Script',cursive;
   color:#fff;
   margin-bottom:10px;
+}
+
+h1{
+  font-size:5rem;
+  font-family:'Dancing Script',cursive;
+  margin-bottom:10px;
+
+  background: linear-gradient(90deg,#ff4d6d,#ffb6c1,#ffffff,#ff4d6d);
+  background-size:300%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:shine 4s infinite linear;
+}
+
+@keyframes shine{
+  0%{ background-position:0%; }
+  100%{ background-position:100%; }
+}
+
+.subtitle{
+  font-size:1.5rem;
+  color:#ffd6e7;
+  text-shadow:0 0 15px rgba(255,105,180,0.4);
 }
 
 .counter{
@@ -587,12 +628,83 @@ to bottom,
   margin-top: 15px;
 }
 
+/* Fireworks behind title only */
+#fireworks{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:1;
+}
+
+/* Main title glow */
+#mainTitle{
+
+  transition:
+  transform 0.4s ease,
+  text-shadow 0.4s ease;
+
+  text-shadow:
+  0 0 10px rgba(255,255,255,0.2);
+}
+
+/* synced pulse */
+#mainTitle.fireGlow{
+
+  transform:scale(1.04);
+
+  text-shadow:
+  0 0 15px rgba(255,255,255,0.9),
+  0 0 35px rgba(255,105,180,0.9),
+  0 0 60px rgba(255,77,109,0.7);
+}
+
+.sparkle-container{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.sparkle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:white;
+  border-radius:50%;
+  opacity:0.6;
+  animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+  from{
+    transform:translateY(100vh);
+    opacity:0;
+  }
+  to{
+    transform:translateY(-10vh);
+    opacity:1;
+  }
+}
+
+.content{
+  position:relative;
+  z-index:3;
+  padding:20px;
+  text-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+
 </style>
 </head>
 <body>
 
-<section class="hero">
-  <div class="bg"></div>
+  
+  <section class="hero">
+    <div class="sparkle-container"></div>
+    <canvas id="fireworks"></canvas>
+    <div class="bg"></div>
   <div class="overlay"></div>
 
   <div class="content">
@@ -600,7 +712,7 @@ to bottom,
 
     <div class="counter" id="counter">2007 - 2007</div>
     <div class="counter2" id="counter2"></div>
-    <h1>Happy Birthday</h1>
+    <h1 id="mainTitle">Happy Birthday</h1>
 
     <div class="subtitle">My Little Princess ❤️</div>
     <p id="typing" class="typing"></p>
@@ -742,7 +854,7 @@ function createHeart(){
 setInterval(createHeart,300);
 
 const text =
-'You are the best thing that ever happened to me ❤️';
+"Happy Birthday my love ❤️ Even from far away, you're always in my heart ✨";
 
 let i = 0;
 
@@ -753,12 +865,43 @@ function type(){
     document.getElementById('typing')
     .innerHTML += text.charAt(i);
 
+    // sync fireworks + glow
+    if(i % 4 === 0){
+
+      launchFirework();
+
+      const title =
+      document.getElementById("mainTitle");
+
+      title.classList.add("fireGlow");
+
+      setTimeout(()=>{
+        title.classList.remove("fireGlow");
+      },300);
+    }
+
     i++;
 
-    setTimeout(type,80);
+    setTimeout(type,70);
+  }
+
+  else{
+
+    // final burst AFTER typing finishes
+    let j = 0;
+
+    function finalBurst(){
+
+      if(j < 8){
+        launchFirework();
+        j++;
+        setTimeout(finalBurst,200);
+      }
+    }
+
+    finalBurst();
   }
 }
-type();
 
 const lovePopup =
 document.getElementById('lovePopup');
@@ -862,7 +1005,194 @@ function closePopup() {
   document.getElementById("overlay").style.display = "none";
   document.getElementById("finalPopup").classList.remove("show");
 }
-</script>
+
+// FIREWORKS BEHIND HAPPY BIRTHDAY
+const canvas =
+document.getElementById("fireworks");
+
+const ctx =
+canvas.getContext("2d");
+
+function resizeCanvas(){
+
+  canvas.width =
+  canvas.offsetWidth;
+
+  canvas.height =
+  canvas.offsetHeight;
+}
+
+resizeCanvas();
+
+window.addEventListener(
+  "resize",
+  resizeCanvas
+);
+
+let fireworks = [];
+
+class Firework{
+
+  constructor(x,y,color){
+
+    this.particles = [];
+
+    for(let i=0;i<60;i++){
+
+      this.particles.push({
+
+        x:x,
+        y:y,
+
+        angle:
+        Math.random()*Math.PI*2,
+
+        speed:
+        Math.random()*4+2,
+
+        alpha:1,
+
+        radius:
+        Math.random()*2+1
+      });
+    }
+
+    this.color = color;
+  }
+
+  update(){
+
+    this.particles.forEach(p=>{
+
+      p.x +=
+      Math.cos(p.angle)*p.speed;
+
+      p.y +=
+      Math.sin(p.angle)*p.speed;
+
+      p.speed *= 0.97;
+
+      p.alpha -= 0.015;
+    });
+
+    this.particles =
+    this.particles.filter(
+      p=>p.alpha > 0
+    );
+  }
+
+  draw(){
+
+    this.particles.forEach(p=>{
+
+      ctx.beginPath();
+
+      ctx.arc(
+        p.x,
+        p.y,
+        p.radius,
+        0,
+        Math.PI*2
+      );
+
+      ctx.fillStyle =
+      `rgba(${this.color},${p.alpha})`;
+
+      ctx.fill();
+    });
+  }
+}
+
+function launchFirework(){
+
+  // TITLE GLOW PULSE
+const title =
+document.getElementById("mainTitle");
+
+title.classList.add("fireGlow");
+
+setTimeout(()=>{
+
+  title.classList.remove(
+    "fireGlow"
+  );
+
+},350);
+
+  // CENTER AREA near title
+  const x =
+  canvas.width/2 +
+  (Math.random()*300-150);
+
+  const y =
+  canvas.height/2 +
+  (Math.random()*120-60);
+
+  const colors = [
+    '255,77,109',
+    '255,182,193',
+    '255,255,255',
+    '255,105,180'
+  ];
+
+  fireworks.push(
+    new Firework(
+      x,
+      y,
+      colors[
+        Math.floor(
+          Math.random()*colors.length
+        )
+      ]
+    )
+  );
+}
+
+function animate(){
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  fireworks.forEach((fw,index)=>{
+
+    fw.update();
+    fw.draw();
+
+    if(fw.particles.length === 0){
+
+      fireworks.splice(index,1);
+    }
+  });
+
+  requestAnimationFrame(
+    animate
+  );
+}
+
+animate();
+
+type();
+
+function createSparkle(){
+
+  const s = document.createElement("div");
+  s.classList.add("sparkle");
+
+  s.style.left = Math.random()*100 + "vw";
+  s.style.animationDuration = (3 + Math.random()*4) + "s";
+  s.style.opacity = Math.random();
+
+  document.querySelector(".sparkle-container").appendChild(s);
+
+  setTimeout(()=> s.remove(), 7000);
+}
+
+setInterval(createSparkle, 200);
+
 </script>
 
 </body>
